@@ -1,0 +1,9 @@
+{
+  "name": "ts-api-boilerplate",
+  "version": "1.0.0",
+  "description": "a typescript template for ts API's",
+  "main": "app.ts",
+  "repository": "https://github.com/vincentmuriuki/api-template.git",
+  "author": "Vincent <vincentmuriuki42@gmail.com>",
+  "license": "MIT"
+}
