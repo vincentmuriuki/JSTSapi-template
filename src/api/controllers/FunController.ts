@@ -1,3 +1,4 @@
+import prisma from '../../database/prisma';
 import Response from '../../utils/response';
 
 /**

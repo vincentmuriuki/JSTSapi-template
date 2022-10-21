@@ -17,7 +17,7 @@ class Responses {
     data: any = null
   ) {
     return res.status(statusCode).json(
-      data
+      (data)
         ? {
             status: 'success',
             message,
