@@ -4,6 +4,7 @@ import { serve, setup } from 'swagger-ui-express';
 import swaggerDefinition from '../../docs/api-specification';
 
 import funRouter from './fun.routes'
+import authRouter from './auth.routes';
 
 const specs = swaggerJsdoc(swaggerDefinition);
 const router = express.Router();
@@ -19,5 +20,6 @@ const specsConfig = setup(specs, {
 router.use(apiDocs, serve);
 router.use(apiDocs, specsConfig);
 router.use(funRouter);
+router.use(prefix, authRouter)
 
 export default router;
