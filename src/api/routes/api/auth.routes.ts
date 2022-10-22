@@ -1,14 +1,14 @@
-import * as express from "express";
-import AuthController from "../../controllers/AuthController";
-import passport from "../../../config/passport";
-import catchErrors from "../../../utils/helper";
+import * as express from 'express';
+import AuthController from '../../controllers/AuthController';
+import passport from '../../../config/passport';
+import catchErrors from '../../../utils/helper';
 import { validation } from '../../validation/validation';
 
 const authRouter = express.Router();
 
 authRouter.get(
-  "/auth/facebook",
-  passport.authenticate("facebook", { scope: ["email"] })
+  '/auth/facebook',
+  passport.authenticate('facebook', { scope: ['email'] })
 );
 
 // authRouter.get(
@@ -20,8 +20,8 @@ authRouter.get(
 // );
 
 authRouter.get(
-  "/auth/google",
-  passport.authenticate("google", { scope: ["profile", "email"] })
+  '/auth/google',
+  passport.authenticate('google', { scope: ['profile', 'email'] })
 );
 
 // authRouter.get(
@@ -32,9 +32,12 @@ authRouter.get(
 //   catchErrors(AuthController.googleSignIn)
 // );
 
-authRouter.post('/auth/signup', validation, catchErrors(AuthController.registerUser));
+authRouter.post(
+  '/auth/signup',
+  validation,
+  catchErrors(AuthController.registerUser)
+);
 
 authRouter.post('/auth/signin', validation, catchErrors(AuthController.signIn));
-
 
 export default authRouter;

@@ -46,9 +46,6 @@ class AuthController {
     const data = {
       firstName: user.firstName,
       lastName: user.lastName,
-      twoFASecret: user.twoFASecret,
-      twoFAType: user.twoFAType,
-      twoFADataURL: user.twoFADataURL,
       token
     };
 
