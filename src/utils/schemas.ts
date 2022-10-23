@@ -27,10 +27,20 @@ const signinSchema = Joi.object()
     abortEarly: false,
   });
 
+  const sendTokenTextSchema = Joi.object()
+  .keys({
+    secret: Joi.string().required(),
+    phoneNumber: Joi.string().required(),
+  })
+  .options({
+    abortEarly: false,
+  });
+
 
   const schema: Record<string, any> = {
     '/auth/signup': signupSchema,
     '/auth/signin': signinSchema,
+    '/2fa/totp/send-token-text': sendTokenTextSchema
   };
   
   export default schema;
