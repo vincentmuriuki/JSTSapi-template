@@ -8,12 +8,27 @@ datasource db {
 }
 
 model Users {
-    id        Int      @id @default(autoincrement())
-    firstName String?
-    lastName  String?
-    email     String?  @unique
-    password  String?
-    createdAt DateTime @default(now()) @map(name: "created_at")
-    updatedAt DateTime @updatedAt @map(name: "updated_at")
+    id                  Int        @id @default(autoincrement())
+    firstName           String?
+    lastName            String?
+    email               String?    @unique
+    password            String?
+    isVerified          Boolean    @default(false)
+    lastLogin           DateTime?  @default(now())
+    receiveNotification Boolean    @default(true)
+    profilePicture      String?
+    twoFAType           TwoFaTypes @default(none)
+    twoFASecret         String?
+    twoFADataURL        String?
+    phoneNumber         String?
+    createdAt           DateTime   @default(now()) @map(name: "created_at")
+    updatedAt           DateTime   @updatedAt @map(name: "updated_at")
 }
 
+enum TwoFaTypes {
+    none
+    sms_text
+    authenticator_app
+    sms_text_temp
+    authenticator_app_temp
+}

@@ -1,6 +1,6 @@
 import hash from '../../utils/hash';
 
-// import { calculatePages, paginate } from '../utils/pagination';
+import { calculatePages, paginate } from '../../utils/pagination';
 import prisma from '../../database/prisma';
 
 /**
@@ -86,24 +86,26 @@ class UserServices {
    * @param { string } id the user's id
    * @returns {object} return the user's data
    */
-  //   async getUserById(id: number) {
-  //     const userRepository = db.sequelize.getRepository(User);
-  //     const userData = await userRepository.findByPk(id, {
-  //       attributes: [
-  //         'firstName',
-  //         'lastName',
-  //         'email',
-  //         'isVerified',
-  //         'gender',
-  //         'lastLogin',
-  //         'role',
-  //         'phoneNumber',
-  //         'remember',
-  //         'profilePicture',
-  //       ],
-  //     });
-  //     return userData;
-  //   }
+  async getUserById(id: number) {
+    const userData = await prisma.users.findUnique({
+      where: {
+        id
+      },
+      select: {
+        firstName: true,
+        lastName: true,
+        email: true,
+        isVerified: true,
+        gender: true,
+        lastLogin: true,
+        role: true,
+        phoneNumber: true,
+        remember: true,
+        profilePicture: true,
+      },
+    });
+    return userData;
+  }
 
   /**
    * @name updateUserInfoByEmail
@@ -112,74 +114,53 @@ class UserServices {
    * @param { string } email$ the user's email
    * @returns {object} return the user's data
    */
-  //   async updateUserInfoByEmail(attributes: any, email$: string): Promise<any> {
-  //     const userRepository = db.sequelize.getRepository(User);
-  //     const {
-  //       firstName,
-  //       lastName,
-  //       email,
-  //       birthDate,
-  //       residenceAddress,
-  //       gender,
-  //       phoneNumber,
-  //       remember,
-  //       profilePicture,
-  //     } = attributes;
+  async updateUserInfoByEmail(attributes: any, email$: string): Promise<any> {
+    const {
+      firstName,
+      lastName,
+      email,
+      birthDate,
+      residenceAddress,
+      gender,
+      phoneNumber,
+      remember,
+      profilePicture,
+    } = attributes;
 
-  //     const currentUser = await userRepository.findOne({
-  //       where: { email: email$ },
-  //     });
+    let result;
+    const updateObj: any = {
+      firstName,
+      lastName,
+      birthDate,
+      gender,
+      email,
+      residenceAddress,
+      phoneNumber,
+      remember,
+    };
 
-  //     let result;
-  //     const updateObj: any = {
-  //       firstName,
-  //       lastName,
-  //       birthDate,
-  //       gender,
-  //       email,
-  //       residenceAddress,
-  //       phoneNumber,
-  //       remember,
-  //     };
+    if (profilePicture !== '') {
+      updateObj.profilePicture = profilePicture;
+    }
 
-  //     if (profilePicture !== '') {
-  //       updateObj.profilePicture = profilePicture;
-  //     }
+    const userDetails = await prisma.users.update(
+      {
+        where: {
+          email: email$,
+        },
+      },
+      {
+        data: updateObj,
+      }
+    );
 
-  //     const userDetails = await userRepository.update(updateObj, {
-  //       where: { email: email$ },
-  //       returning: true,
-  //       plain: true,
-  //     });
+    result = userDetails[1];
 
-  //     result = userDetails[1];
+    delete result.password;
+  
 
-  //     delete result.password;
-  //     // }
-
-  //     return result;
-  //   }
-
-  /**
-   * setUserRole - used to update a user's role by the email provided
-   * @param {object} body - request object posted to route
-   * @returns {object} updated user object
-   */
-  //   async setUserRole(body: any) {
-  //     const userRepository = db.sequelize.getRepository(User);
-  //     const updateUser = await userRepository.update(
-  //       {
-  //         role: body.role,
-  //       },
-  //       {
-  //         returning: true,
-  //         where: { email: body.email },
-  //       }
-  //     );
-  //     // eslint-disable-next-line no-unused-vars
-  //     const [rowsUpdate, [updatedUser]] = updateUser;
-  //     return updatedUser;
-  //   }
+    return result;
+  }
 }
 
 export default new UserServices();
