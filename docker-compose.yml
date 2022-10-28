@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  clevel:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    volumes:
+      - type: bind
+        source: ./src/
+        target: /app/src/
+      - type: bind
+        source: ./package.json
+        target: /app/package.json
+      - type: bind
+        source: ./nodemon.json
+        target: /app/nodemon.json
+    env_file: .env
+    ports:
+      - '3010:3010'
+    networks:
+      - templatenetwork
+  clevelPostgres:
+    image: "postgres:alpine"
+    volumes:
+      - my_dbdata:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: "clevel"
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    ports:
+      - "56432:5432"
+    networks:
+      - clevelnetwork
+volumes: 
+  my_dbdata:
+networks:
+  templatenetwork:
+    driver: bridge
