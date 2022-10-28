@@ -1,0 +1,77 @@
+{
+  "parserOptions": {
+    "ecmaVersion": 8,
+    "ecmaFeatures": {
+      "experimentalObjectRestSpread": true,
+      "jsx": true
+    },
+    "sourceType": "module"
+  },
+  "env": {
+    "es6": true,
+    "node": true
+  },
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint", "import", "node", "promise"],
+  "extends": [
+    //"airbnb-base",
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "rules": {
+    "yoda": 1,
+    "no-multi-str": 1,
+    "comma-spacing": 1,
+    "no-tabs": 1,
+    "no-var": 2,
+    "require-jsdoc": 1,
+    "camelcase": 2,
+    "comma-style": [1, "last"],
+    "no-lonely-if": 2,
+    "no-const-assign": 2,
+    "no-dupe-args": 2,
+    "no-duplicate-imports": 2,
+    "indent": "off",
+    "@typescript-eslint/no-var-requires": 0,
+    "@typescript-eslint/ban-types": [
+      "error",
+      {
+        "types": {
+          "String": false,
+          "Boolean": false,
+          "Number": false,
+          "Symbol": false,
+          "{}": false,
+          "Object": false,
+          "object": false,
+          "Function": false
+        },
+        "extendDefaults": true
+      }
+    ],
+    "eol-last": 0,
+    "no-multiple-empty-lines": "off",
+    "semi": "off",
+    "no-await-in-loop": "off",
+    "nonblock-statement-body-position": "warn",
+    "max-len": "off",
+    "comma-dangle": "off",
+    "@typescript-eslint/ban-ts-comment": "off",
+    "@typescript-eslint/no-inferrable-types": "off",
+    "ban-ts-comment": "off",
+    "prefer-const": "off",
+    "import/export": "error",
+    "import/first": "error",
+    "import/no-duplicates": "error",
+    "import/no-webpack-loader-syntax": "error",
+    "node/no-deprecated-api": "error",
+    "node/process-exit-as-throw": "error",
+    "@typescript-eslint/explicit-module-boundary-types": "off"
+  }
+} // For additional reference
+// https://eslint.org/docs/rules/
+
+//"off" or 0 - turn the rule off
+//"warn" or 1 - turn the rule on as a warning (doesn’t affect exit code)
+//"error" or 2 - turn the rule on as an error (exit code will be 1)
